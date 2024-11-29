@@ -2,12 +2,14 @@ openapi: 3.0.0
 info:
   title: Sample API
   version: "1.0"
-  description: A simple API with an external spec file
+  description: A simple API with Bearer token authentication
 
 paths:
   /items:
     get:
       summary: List all items
+      security:
+        - BearerAuth: []
       responses:
         "200":
           description: A JSON array of items
@@ -19,6 +21,8 @@ paths:
                   $ref: "#/components/schemas/Item"
     post:
       summary: Create a new item
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -36,6 +40,8 @@ paths:
   /items/{id}:
     get:
       summary: Get a specific item by ID
+      security:
+        - BearerAuth: []
       parameters:
         - name: id
           in: path
@@ -53,6 +59,10 @@ paths:
           description: Item not found
 
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
   schemas:
     Item:
       type: object
